@@ -9,7 +9,7 @@ function NavBar() {
         },
         {
             label: 'Completed Tasks',
-            path: '/completedtasks'
+            path: '/CompletedTaskView'
         },
     ]
 
