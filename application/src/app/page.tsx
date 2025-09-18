@@ -1,7 +1,9 @@
+import ManageTaskAssignment from './component/ManageTaskAssignment'
+
 export default function Home() {
   return (
     <main>
-      <h1>Hello there!</h1>
+      <ManageTaskAssignment />
     </main>
   )
 }
