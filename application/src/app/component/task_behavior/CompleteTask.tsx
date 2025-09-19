@@ -1,6 +1,7 @@
 function CompleteTask() {
     return (<div className = "block mt-2">
             <h2 className = "subtitle is-6 has-text-weight-bold is-family-sans-serif has-text-warning-dark">Complete Task</h2>
+            <h3 className = "subtitle is-7 is-family-sans-serif has-text-warning-dark">Specify a Task ID in the Task Table and Completed Minutes to complete a task</h3>
               <form>
                 <div className = "field">
                   <label className = "label is-family-code is-size-7">Task ID:</label>

@@ -11,7 +11,7 @@ function Page() {
     return (
         <div className="section">
             <div className="block mt-6">
-                <h1 className = "title is-5 has-text-weight-bold is-family-sans-serif has-text-warning-dark">Total Number of Estimated Minutes for all Unassigned Tasks: 90</h1>
+                <h1 className = "title is-5 has-text-weight-bold is-family-sans-serif has-text-warning-dark">Total Number of Estimated Minutes for all Unassigned Tasks: 135</h1>
                 <div className="columns is-multiline">
                     <div className="column is-one-third">
                         <AddEngineer />

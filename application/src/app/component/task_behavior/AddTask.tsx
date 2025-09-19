@@ -2,6 +2,7 @@ function AddTask() {
     return (
        <div className = "block mt-2">
             <h2 className = "subtitle is-6 has-text-weight-bold is-family-sans-serif has-text-warning-dark">Add Task</h2>
+            <h3 className = "subtitle is-7 is-family-sans-serif has-text-warning-dark">Specify a Task Name and Estimated Minutes to add a task to the Task Table</h3>
               <form>
                 <div className = "field">
                   <label className = "label is-family-code is-size-7">Task Name:</label>

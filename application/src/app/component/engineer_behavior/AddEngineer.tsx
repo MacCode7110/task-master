@@ -2,6 +2,7 @@ function AddEngineer() {
     return (
         <div className = "block mt-2">
             <h2 className = "subtitle is-6 has-text-weight-bold is-family-sans-serif has-text-warning-dark">Add Engineer</h2>
+            <h3 className = "subtitle is-7 is-family-sans-serif has-text-warning-dark">Specify an Engineer Name to add an engineer to the Engineer Table</h3>
               <form>
                 <div className = "field">
                   <label className = "label is-family-code is-size-7">Engineer Name:</label>
