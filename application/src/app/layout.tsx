@@ -1,4 +1,5 @@
-import NavBar from "./component/NavBar"
+import 'bulma/css/bulma.min.css'
+import NavBar from "./component/navigation/NavBar"
 
 export const metadata = {
   title: 'Next.js',

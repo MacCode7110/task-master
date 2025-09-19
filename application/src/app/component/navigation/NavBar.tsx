@@ -14,15 +14,17 @@ function NavBar() {
     ]
 
     const renderedLinks = links.map((link) => {
-        return <Link key={link.label} href={link.path}>
+        return <Link key={link.label} href={link.path} className="navbar-item">
             {link.label}
         </Link>
     })
 
     return (
-        <div>
-            {renderedLinks}
-        </div>
+        <nav className="navbar is-fixed-top has-background-white-ter" role="navigation" aria-label="main navigation">
+            <div className="navbar-menu">
+                {renderedLinks}
+            </div>
+        </nav>
     )
 }
 

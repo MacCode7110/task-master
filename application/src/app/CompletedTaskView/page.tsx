@@ -1,7 +1,9 @@
+import CompletedTaskTable from "../component/task_view/CompletedTaskTable"
+
 function Page() {
-    return <div>
-        Completed task view
-    </div>
+    return (
+        <CompletedTaskTable />
+    )
 }
 
 export default Page

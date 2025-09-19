@@ -1,9 +1,9 @@
-import TaskAssignmentManage from './TaskAssignmentManage/page'
+import ManageTaskAssignment from './ManageTaskAssignment/page'
 
 export default function Home() {
   return (
     <main>
-      <TaskAssignmentManage />
+      <ManageTaskAssignment />
     </main>
   )
 }
