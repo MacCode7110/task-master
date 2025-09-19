@@ -20,7 +20,7 @@ function NavBar() {
     })
 
     return (
-        <nav className="navbar is-fixed-top has-background-white-ter" role="navigation" aria-label="main navigation">
+        <nav className="navbar is-fixed-top has-background-info" role="navigation" aria-label="main navigation">
             <div className="navbar-menu">
                 {renderedLinks}
             </div>

@@ -8,14 +8,14 @@ function CompletedTaskTable() {
                     <div className = "table-container">
                         <table className = "table is-full-width is-bordered is-striped is-narrow is-hoverable">
                             <thead>
-                                <tr>
+                                <tr className="is-info">
                                     <th>Task ID</th>
                                     <th>Name</th>
                                     <th>Completed Minutes</th>
                                 </tr>
                             </thead>
                             <tfoot>
-                                <tr>
+                                <tr className="is-info">
                                     <th>Task ID</th>
                                     <th>Name</th>
                                     <th>Completed Minutes</th>

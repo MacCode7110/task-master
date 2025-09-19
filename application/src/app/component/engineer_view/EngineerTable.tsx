@@ -5,7 +5,7 @@ function EngineerTable() {
             <div className="table-container">
                 <table className = "table is-full-width is-bordered is-striped is-narrow is-hoverable">
                 <thead>
-                    <tr>
+                    <tr className="is-info">
                         <th>Engineer ID</th>
                         <th>Name</th>
                         <th>Assigned Tasks</th>
@@ -13,7 +13,7 @@ function EngineerTable() {
                     </tr>
                 </thead>
                 <tfoot>
-                    <tr>
+                    <tr className="is-info">
                         <th>Engineer ID</th>
                         <th>Name</th>
                         <th>Assigned Tasks</th>
