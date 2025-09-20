@@ -8,16 +8,16 @@ function EngineerTable() {
                     <tr className="is-info">
                         <th>Engineer ID</th>
                         <th>Name</th>
-                        <th>Assigned Tasks (ID - Name - Estimated Minutes)</th>
-                        <th>Total Estimated Task Minutes</th>
+                        <th>Assigned Tasks (Task ID - Name - Estimated Minutes)</th>
+                        <th>Total Estimated Assigned Task Minutes</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr className="is-info">
                         <th>Engineer ID</th>
                         <th>Name</th>
-                        <th>Assigned Tasks (ID - Name - Estimated Minutes)</th>
-                        <th>Total Estimated Task Minutes</th>
+                        <th>Assigned Tasks (Task ID - Name - Estimated Minutes)</th>
+                        <th>Total Estimated Assigned Task Minutes</th>
                     </tr>
                 </tfoot>
                 <tbody>
