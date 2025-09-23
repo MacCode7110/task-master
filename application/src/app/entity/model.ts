@@ -46,11 +46,17 @@ export class Manager {
     }
 
     addEngineer(name: String) : void {
-
+        if(this.engineerList.length === 0) {
+            this.engineerList.push(new Engineer(
+            0, name, [], 0))
+        } else {
+            this.engineerList.push(new Engineer(
+            this.engineerList.slice(-1)[0].engineerID + 1, name, [], 0))
+        }
     }
 
     removeEngineer(engineerID: number) : void {
-
+        this.engineerList = this.engineerList.filter(e => e.engineerID !== engineerID)
     }
 
     addTask(name: String, estimatedTime: number) : void {
