@@ -1,12 +1,12 @@
 export class Task {
-    taskID: number
+    taskID: String
     name: String
     estimatedTime: number
     assigned: boolean
     completedTime: number
     isComplete: boolean
 
-    constructor(taskID: number, name: String, estimatedTime: number, assigned: boolean, completedTime: number, isComplete: boolean) {
+    constructor(taskID: String, name: String, estimatedTime: number, assigned: boolean, completedTime: number, isComplete: boolean) {
         this.taskID = taskID
         this.name = name
         this.estimatedTime = estimatedTime
@@ -17,12 +17,12 @@ export class Task {
 }
 
 export class Engineer {
-    engineerID: number
+    engineerID: String
     name: String
     assignedTasks: Task[]
     totalEstimatedTaskTime: number
 
-    constructor(engineerID: number, name: String, assignedTasks: Task[], totalEstimatedTaskTime: number) {
+    constructor(engineerID: String, name: String, assignedTasks: Task[], totalEstimatedTaskTime: number) {
         this.engineerID = engineerID
         this.name = name
         this.assignedTasks = assignedTasks
@@ -45,30 +45,31 @@ export class Manager {
         this.totalCompletedTaskTime = totalCompletedTaskTime
     }
 
-    addEngineer(name: String) : void {
-        if(this.engineerList.length === 0) {
-            this.engineerList.push(new Engineer(
-            0, name, [], 0))
-        } else {
-            this.engineerList.push(new Engineer(
-            this.engineerList.slice(-1)[0].engineerID + 1, name, [], 0))
-        }
+    generateUniqueID() : String {
+        // Calculate an ID using Date.now() and Math.random() to secure an extremely high probability of uniqueness within the scope of the application
+        return `${Date.now()-(Math.random() * 100)}`
     }
 
-    removeEngineer(engineerID: number) : void {
+    addEngineer(name: String) : void {
+        this.engineerList.push(new Engineer(
+        this.generateUniqueID(), name, [], 0))
+    }
+
+    removeEngineer(engineerID: String) : void {
         this.engineerList = this.engineerList.filter(e => e.engineerID !== engineerID)
     }
 
     addTask(name: String, estimatedTime: number) : void {
-
+        this.taskList.push(new Task(
+            this.generateUniqueID(), name, estimatedTime, false, 0, false))
     }
 
-    removeTask(taskID: number) : void {
-
+    removeTask(taskID: String) : void {
+        this.taskList = this.taskList.filter(t => t.taskID !== taskID)
     }
 
     assignTask(taskID: number, engineerID: number) : void {
-
+        
     }
 
     completeTask(taskID: number, completedMinutes: number) : void {
@@ -94,4 +95,8 @@ export class Model {
     constructor(manager: Manager) {
         this.manager = manager
     }
+}
+
+function generateUniqueID() {
+    throw new Error("Function not implemented.")
 }
