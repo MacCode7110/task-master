@@ -19,7 +19,7 @@ function AddEngineer() {
               <form onSubmit={handleSubmit}>
                 <div className = "field">
                   <label className = "label is-family-code is-size-7">Engineer Name:</label>
-                  <input className = "input is-info is-small" type="text" id="engineerName" value={engineerName} onChange={handleChange}/>
+                  <input className = "input is-info is-small" type="text" name="engineerName" value={engineerName} onChange={handleChange}/>
                 </div>
                 <button className = "button is-family-monospace is-link is-size-7" id = "submitEngineer">Submit New Engineer</button>
               </form>
