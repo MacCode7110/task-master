@@ -1,3 +1,4 @@
+"use client"
 function CompletedTaskTable() {
     return (
         <section className="section">

@@ -1,3 +1,4 @@
+"use client"
 function EngineerTable() {
     return (
         <div className = "block mt-2">

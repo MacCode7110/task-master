@@ -1,3 +1,4 @@
+"use client"
 function TaskList() {
     return (
         <div className = "block mt-2">

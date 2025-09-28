@@ -1,3 +1,4 @@
+"use client"
 function RemoveTask() {
     return (
        <div className = "block mt-2">

@@ -1,3 +1,4 @@
+"use client"
 function CompleteTask() {
     return (<div className = "block mt-2">
             <h2 className = "subtitle is-6 has-text-weight-bold is-family-sans-serif has-text-warning-dark">Complete Task</h2>
