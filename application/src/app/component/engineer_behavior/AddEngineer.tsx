@@ -11,6 +11,9 @@ function AddEngineer() {
 
     const handleSubmit = (e : FormEvent) => {
       e.preventDefault()
+      // Add engineer to engineer table
+      
+      setEngineerName("")
     }
 
     return (
