@@ -1,7 +1,12 @@
 "use client"
+import { Manager } from "@/app/entity/model"
 import { FormEvent, useState } from "react"
 
-function AddTask() {
+interface AddTaskProps {
+  manager : Manager
+}
+
+const AddTask: React.FC<AddTaskProps> = ({ manager }) => {
     const [state, setState] = useState({
       taskName: "",
       estimatedMinutes: 0
@@ -17,7 +22,11 @@ function AddTask() {
     }
 
     const handleSubmit = (e : FormEvent) => {
-      e.preventDefault()      
+      e.preventDefault()
+      manager.addTask(state.taskName, state.estimatedMinutes)
+      setState({taskName: "",
+      estimatedMinutes: 0})
+      console.log(manager.getUnassignedTaskList())    
     }
 
     return (
@@ -33,9 +42,9 @@ function AddTask() {
                   <label className = "label is-family-code is-size-7">Estimated Minutes:</label>
                   <input className = "input is-info is-small" type="number" value={state.estimatedMinutes} name="estimatedMinutes" onChange={handleChange}/>
                 </div>
-                <button className = "button is-family-monospace is-link is-size-7" id = "addTask">Add Task</button>
+                <button className = "button is-family-monospace is-link is-size-7">Add Task</button>
               </form>
-              <div className = "mt-3 mb-3" id = "addTaskInfo"></div>
+              <div className = "mt-3 mb-3"></div>
           </div>
     )
 }

@@ -1,7 +1,12 @@
 "use client"
+import { Manager } from "@/app/entity/model"
 import { FormEvent, useState } from "react"
 
-function AddEngineer() {
+interface AddEngineerProps {
+  manager : Manager
+}
+
+const AddEngineer: React.FC<AddEngineerProps> = ({ manager }) => {
     const [engineerName, setEngineerName] = useState("")
 
     const handleChange = (e : FormEvent) => {
@@ -11,9 +16,9 @@ function AddEngineer() {
 
     const handleSubmit = (e : FormEvent) => {
       e.preventDefault()
-      // Add engineer to engineer table
-      
+      manager.addEngineer(engineerName)
       setEngineerName("")
+      console.log(manager.getEngineerList())
     }
 
     return (
@@ -23,11 +28,11 @@ function AddEngineer() {
               <form onSubmit={handleSubmit}>
                 <div className = "field">
                   <label className = "label is-family-code is-size-7">Engineer Name:</label>
-                  <input className = "input is-info is-small" type="text" name="engineerName" value={engineerName} onChange={handleChange}/>
+                  <input className = "input is-info is-small" type="text" value={engineerName} name="engineerName" onChange={handleChange}/>
                 </div>
-                <button className = "button is-family-monospace is-link is-size-7" id = "submitEngineer">Submit New Engineer</button>
+                <button className = "button is-family-monospace is-link is-size-7">Submit New Engineer</button>
               </form>
-              <div className = "mt-3 mb-3" id = "addEngineerInfo"></div>
+              <div className = "mt-3 mb-3"></div>
           </div>
     )
 }

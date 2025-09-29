@@ -2,17 +2,13 @@ export class Task {
     private taskID: String
     private name: String
     private estimatedTime: number
-    private assigned: boolean
     private completedTime: number
-    private isComplete: boolean
 
-    constructor(taskID: String, name: String, estimatedTime: number, assigned: boolean, completedTime: number, isComplete: boolean) {
+    constructor(taskID: String, name: String, estimatedTime: number, completedTime: number) {
         this.taskID = taskID
         this.name = name
         this.estimatedTime = estimatedTime
-        this.assigned = assigned
         this.completedTime = completedTime
-        this.isComplete = isComplete
     }
 
     public getTaskID(): String {
@@ -39,28 +35,12 @@ export class Task {
         this.estimatedTime = estimatedTime
     }
 
-    public getAssigned(): boolean {
-        return this.assigned
-    }
-
-    public setAssigned(assigned: boolean) {
-        this.assigned = assigned
-    }
-
     public getCompletedTime(): number {
         return this.completedTime
     }
 
     public setCompletedTime(completedTime: number) {
         this.completedTime = completedTime
-    }
-
-    public getIsComplete(): boolean {
-        return this.isComplete
-    }
-
-    public setIsComplete(isComplete: boolean) {
-        this.isComplete = isComplete
     }
 }
 
@@ -112,12 +92,12 @@ export class Engineer {
 
 export class Manager {
     private engineerList: Engineer[]
-    private taskList: Task[]
+    private unassignedTaskList: Task[]
     private completedTaskList: Task[]
 
-    constructor(engineerList: Engineer[], taskList: Task[], completedTaskList: Task[]) {
+    constructor(engineerList: Engineer[], unassignedTaskList: Task[], completedTaskList: Task[]) {
         this.engineerList = engineerList
-        this.taskList = taskList
+        this.unassignedTaskList = unassignedTaskList
         this.completedTaskList = completedTaskList
     }
 
@@ -136,20 +116,20 @@ export class Manager {
     }
 
     addTask(name: String, estimatedTime: number) : void {
-        this.taskList.push(new Task(
-            this.generateUniqueID(), name, estimatedTime, false, 0, false))
+        this.unassignedTaskList.push(new Task(
+            this.generateUniqueID(), name, estimatedTime, 0))
     }
 
     removeTask(taskID: String) : void {
-        this.taskList = this.taskList.filter(t => t.getTaskID() !== taskID)
+        this.unassignedTaskList = this.unassignedTaskList.filter(t => t.getTaskID() !== taskID)
     }
 
     // Implementing Immutable Object Modification for assignTask and completeTask methods to create safe code
 
     assignTask(taskID: String, engineerID: String) : void {
-        let task = this.taskList.find(t => t.getTaskID() === taskID)
-        task?.setAssigned(true)
-        this.taskList.filter(t => t.getTaskID() !== taskID)
+        let task = this.unassignedTaskList.find(t => t.getTaskID() === taskID)
+        // Remove task from task list
+        this.unassignedTaskList = this.unassignedTaskList.filter(t => t.getTaskID() !== taskID)
         
         let assignedTasks = this.engineerList.find(e => e.getEngineerID() === engineerID)?.getAssignedTasks()
         assignedTasks?.push(task as Task)
@@ -162,7 +142,7 @@ export class Manager {
         let task = assignedTasks?.find(t => t.getTaskID() === taskID)
         
         task?.setCompletedTime(completedMinutes)
-        assignedTasks?.filter(t => t.getTaskID() !== taskID)
+        assignedTasks = assignedTasks?.filter(t => t.getTaskID() !== taskID)
         this.engineerList.find(e => e.getAssignedTasks().
         find(t => t.getTaskID() === taskID))?.setAssignedTasks(assignedTasks as Task[])
 
@@ -172,7 +152,7 @@ export class Manager {
     computeTotalEstimatedUnassignedTaskTime() : number {
         let totalEstimatedUnassignedTime = 0
         
-        for(let t of this.taskList) {
+        for(let t of this.unassignedTaskList) {
             totalEstimatedUnassignedTime+=t.getEstimatedTime()
         }
 
@@ -199,6 +179,19 @@ export class Manager {
 
         return totalCompletedTime
     }
+
+    getEngineerList() : Engineer[] {
+        return this.engineerList
+    }
+
+    getUnassignedTaskList() : Task[] {
+        return this.unassignedTaskList
+    }
+
+    getCompletedTaskList() : Task[] {
+        return this.completedTaskList
+    }
+
 }
 
 export class Model {
@@ -207,4 +200,5 @@ export class Model {
     constructor(manager: Manager) {
         this.manager = manager
     }
+
 }

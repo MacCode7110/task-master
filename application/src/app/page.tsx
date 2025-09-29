@@ -1,13 +1,14 @@
+"use client"
 import { useState } from 'react'
-import ManageTaskAssignment from './ManageTaskAssignment/page'
+import ManageBoard from './ManageBoard/page'
 import { Manager, Model } from "./entity/model"
 
 export default function Home() {
-  const [model, setModel] = useState(new Manager([], [], []))
-  
+  const [model, setModel] = useState(new Model(new Manager([], [], [])))
+
   return (
     <main>
-      <ManageTaskAssignment />
+      <ManageBoard manager={model.manager}/>
     </main>
   )
 }

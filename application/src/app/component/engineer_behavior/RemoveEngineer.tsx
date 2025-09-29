@@ -1,8 +1,18 @@
 "use client"
+import { Engineer, Manager } from "@/app/entity/model"
 import { FormEvent, useState } from "react"
 
-function RemoveEngineer() {
+interface RemoveEngineerProps {
+  manager : Manager
+}
+
+const isNoTaskAssigned = (engineerList: Engineer[], engineerID : String) : boolean => {
+    return (((engineerList.find(e => e.getEngineerID() === engineerID))?.getAssignedTasks().length === 0) ? true : false)
+}
+
+const RemoveEngineer: React.FC<RemoveEngineerProps> = ({ manager }) => {
     const [engineerID, setEngineerID] = useState("")
+    const [submissionIsDisabled, setSubmissionIsDisabled] = useState(false)
     
     const handleChange = (e : FormEvent) => {
       const target = e.target as HTMLInputElement
@@ -11,6 +21,9 @@ function RemoveEngineer() {
     
     const handleSubmit = (e : FormEvent) => {
       e.preventDefault()
+      isNoTaskAssigned(manager.getEngineerList(), engineerID) ? manager.removeEngineer(engineerID) : setSubmissionIsDisabled(true)
+      setEngineerID("")
+      console.log(manager.getEngineerList())
     }
   
     return (
@@ -20,11 +33,11 @@ function RemoveEngineer() {
               <form onSubmit={handleSubmit}>
                 <div className = "field">
                   <label className = "label is-family-code is-size-7">Engineer ID:</label>
-                  <input onChange={handleChange} className = "input is-info is-small" type="number" id="engineerID"/>
+                  <input className = "input is-info is-small" type="text" value={engineerID} onChange={handleChange}/>
                 </div>
-                <button className = "button is-family-monospace is-link is-size-7" id = "removeEngineer">Remove Existing Engineer</button>
+                <button className = "button is-family-monospace is-link is-size-7" disabled={submissionIsDisabled}>Remove Existing Engineer</button>
               </form>
-              <div className = "mt-3 mb-3" id = "removeEngineerInfo"></div>
+              <div className = "mt-3 mb-3"></div>
           </div>
     )
 }

@@ -1,4 +1,4 @@
-export default function TaskAssignmentManageLayout({
+export default function ManageBoardLayout({
   children,
 }: {
   children: React.ReactNode
