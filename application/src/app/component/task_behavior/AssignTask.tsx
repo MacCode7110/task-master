@@ -1,14 +1,30 @@
 "use client"
-import { Engineer, Manager } from "@/app/entity/model"
+import { Engineer, Manager, Task } from "@/app/entity/model"
 import { FormEvent, useState } from "react"
 
 interface AssignTaskProps {
   manager: Manager
 }
 
-const isTaskAssigned = (engineerList: Engineer[], taskID: String) => {
+const isTaskAssigned = (engineerList: Engineer[], taskID: String) : boolean => {
     return (engineerList.find(e => e.getAssignedTasks().
     find(t => t.getTaskID() === taskID)) ? true : false)
+}
+
+const taskExists = (unassignedTaskList: Task[], taskID: String) : boolean => {
+  return (unassignedTaskList.find(t => t.getTaskID() === taskID) ? true : false)
+}
+
+const engineerExists = (engineerList : Engineer[], engineerID : String) : boolean => {
+  return (engineerList.find(e => e.getEngineerID() === engineerID) ? true : false)
+}
+
+const isValidInput = (engineerList: Engineer[], engineerID: String, unassignedTaskList: Task[], taskID: String) : boolean => {
+  return (engineerID.length > 0) && 
+  (taskID.length > 0) && 
+  engineerExists(engineerList, engineerID) && 
+  taskExists(unassignedTaskList, taskID) && 
+  isTaskAssigned(engineerList, taskID)
 }
 
 const AssignTask: React.FC<AssignTaskProps> = ({ manager }) => {
@@ -29,7 +45,7 @@ const AssignTask: React.FC<AssignTaskProps> = ({ manager }) => {
 
     const handleSubmit = (e : FormEvent) => {
         e.preventDefault()
-        !(isTaskAssigned(manager.getEngineerList(), state.taskID)) ? manager.assignTask(state.taskID, state.engineerID) : setSubmissionIsDisabled(true)
+        isValidInput(manager.getEngineerList(), state.engineerID, manager.getUnassignedTaskList(), state.taskID) ? manager.assignTask(state.taskID, state.engineerID) : setSubmissionIsDisabled(true)
         setState({taskID: "", engineerID: ""})
         console.log(manager.getEngineerList())
         console.log(manager.getUnassignedTaskList())

@@ -10,6 +10,14 @@ const isNoTaskAssigned = (engineerList: Engineer[], engineerID : String) : boole
     return (((engineerList.find(e => e.getEngineerID() === engineerID))?.getAssignedTasks().length === 0) ? true : false)
 }
 
+const engineerExists = (engineerList : Engineer[], engineerID : String) : boolean => {
+  return (engineerList.find(e => e.getEngineerID() === engineerID) ? true : false)
+}
+
+const isValidInput = (engineerList : Engineer[], engineerID : String) : boolean => {
+    return engineerExists(engineerList, engineerID) && isNoTaskAssigned(engineerList, engineerID)
+}
+
 const RemoveEngineer: React.FC<RemoveEngineerProps> = ({ manager }) => {
     const [engineerID, setEngineerID] = useState("")
     const [submissionIsDisabled, setSubmissionIsDisabled] = useState(false)
@@ -21,7 +29,7 @@ const RemoveEngineer: React.FC<RemoveEngineerProps> = ({ manager }) => {
     
     const handleSubmit = (e : FormEvent) => {
       e.preventDefault()
-      isNoTaskAssigned(manager.getEngineerList(), engineerID) ? manager.removeEngineer(engineerID) : setSubmissionIsDisabled(true)
+      isValidInput(manager.getEngineerList(), engineerID) ? manager.removeEngineer(engineerID) : setSubmissionIsDisabled(true)
       setEngineerID("")
       console.log(manager.getEngineerList())
     }

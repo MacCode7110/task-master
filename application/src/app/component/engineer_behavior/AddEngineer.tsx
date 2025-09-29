@@ -8,6 +8,7 @@ interface AddEngineerProps {
 
 const AddEngineer: React.FC<AddEngineerProps> = ({ manager }) => {
     const [engineerName, setEngineerName] = useState("")
+    const [submissionIsDisabled, setSubmissionIsDisabled] = useState(false)
 
     const handleChange = (e : FormEvent) => {
       const target = e.target as HTMLInputElement
@@ -16,7 +17,7 @@ const AddEngineer: React.FC<AddEngineerProps> = ({ manager }) => {
 
     const handleSubmit = (e : FormEvent) => {
       e.preventDefault()
-      manager.addEngineer(engineerName)
+      engineerName.length > 0 ? manager.addEngineer(engineerName) : setSubmissionIsDisabled(true)
       setEngineerName("")
       console.log(manager.getEngineerList())
     }
@@ -30,7 +31,7 @@ const AddEngineer: React.FC<AddEngineerProps> = ({ manager }) => {
                   <label className = "label is-family-code is-size-7">Engineer Name:</label>
                   <input className = "input is-info is-small" type="text" value={engineerName} name="engineerName" onChange={handleChange}/>
                 </div>
-                <button className = "button is-family-monospace is-link is-size-7">Submit New Engineer</button>
+                <button className = "button is-family-monospace is-link is-size-7" disabled={submissionIsDisabled}>Submit New Engineer</button>
               </form>
               <div className = "mt-3 mb-3"></div>
           </div>

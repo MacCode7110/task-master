@@ -11,6 +11,7 @@ const AddTask: React.FC<AddTaskProps> = ({ manager }) => {
       taskName: "",
       estimatedMinutes: 0
     })
+    const [submissionIsDisabled, setSubmissionIsDisabled] = useState(false)
 
     const handleChange = (e : FormEvent) => {
       const target = e.target as HTMLInputElement
@@ -23,7 +24,7 @@ const AddTask: React.FC<AddTaskProps> = ({ manager }) => {
 
     const handleSubmit = (e : FormEvent) => {
       e.preventDefault()
-      manager.addTask(state.taskName, state.estimatedMinutes)
+      state.taskName.length > 0 && state.estimatedMinutes > 0 ? manager.addTask(state.taskName, state.estimatedMinutes) : setSubmissionIsDisabled(true)
       setState({taskName: "",
       estimatedMinutes: 0})
       console.log(manager.getUnassignedTaskList())    
@@ -42,7 +43,7 @@ const AddTask: React.FC<AddTaskProps> = ({ manager }) => {
                   <label className = "label is-family-code is-size-7">Estimated Minutes:</label>
                   <input className = "input is-info is-small" type="number" value={state.estimatedMinutes} name="estimatedMinutes" onChange={handleChange}/>
                 </div>
-                <button className = "button is-family-monospace is-link is-size-7">Add Task</button>
+                <button className = "button is-family-monospace is-link is-size-7" disabled={submissionIsDisabled}>Add Task</button>
               </form>
               <div className = "mt-3 mb-3"></div>
           </div>

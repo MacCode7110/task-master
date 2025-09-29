@@ -10,6 +10,11 @@ const isTaskNotAssigned = (unassignedTaskList: Task[], taskID : String) => {
     return (unassignedTaskList.find(t => t.getTaskID() === taskID) ? true : false)
 }
 
+const isValidInput = (unassignedTaskList: Task[], taskID : String) => {
+    return (taskID.length > 0) && 
+    isTaskNotAssigned(unassignedTaskList, taskID)
+}
+
 const RemoveTask: React.FC<RemoveTaskProps> = ({ manager }) => {
     const [taskID, setTaskID] = useState("")
     const [submissionIsDisabled, setSubmissionIsDisabled] = useState(false)
@@ -21,7 +26,7 @@ const RemoveTask: React.FC<RemoveTaskProps> = ({ manager }) => {
 
     const handleSubmit = (e : FormEvent) => {
       e.preventDefault()
-      isTaskNotAssigned(manager.getUnassignedTaskList(), taskID) ? manager.removeTask(taskID) : setSubmissionIsDisabled(true)
+      isValidInput(manager.getUnassignedTaskList(), taskID) ? manager.removeTask(taskID) : setSubmissionIsDisabled(true)
       setTaskID("")
       console.log(manager.getUnassignedTaskList())
     }

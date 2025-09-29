@@ -1,9 +1,20 @@
 "use client"
-import { Manager } from "@/app/entity/model"
+import { Engineer, Manager } from "@/app/entity/model"
 import { FormEvent, useState } from "react"
 
 interface CompleteTaskProps {
   manager : Manager
+}
+
+const isTaskAssigned = (engineerList : Engineer[], taskID : String) : boolean => {
+    return (engineerList.find(e => e.getAssignedTasks().
+    find(t => t.getTaskID() === taskID)) ? true : false)
+}
+
+const isValidInput = (taskID : String, completedMinutes: number, engineerList: Engineer[]) : boolean => {
+    return ((taskID.length > 0) && 
+    (completedMinutes > 0) && 
+    isTaskAssigned(engineerList, taskID))
 }
 
 const CompleteTask: React.FC<CompleteTaskProps> = ({ manager }) => {
@@ -23,7 +34,7 @@ const CompleteTask: React.FC<CompleteTaskProps> = ({ manager }) => {
 
     const handleSubmit = (e : FormEvent) => {
         e.preventDefault()
-        state.taskID.length !== 0 ? manager.completeTask(state.taskID, state.completedMinutes) : setSubmissionIsDisabled(true)
+        isValidInput(state.taskID, state.completedMinutes, manager.getEngineerList()) ? manager.completeTask(state.taskID, state.completedMinutes) : setSubmissionIsDisabled(true)
         console.log(manager.getCompletedTaskList())
     }
 

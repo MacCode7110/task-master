@@ -137,12 +137,12 @@ export class Manager {
     }
 
     completeTask(taskID: String, completedMinutes: number) : void {
-        let assignedTasks = (this.engineerList.find(e => e.getAssignedTasks().
-        find(t => t.getTaskID() === taskID)))?.getAssignedTasks()
+        let assignedTasks = (this.engineerList.find(e => e.getAssignedTasks().find(t => t.getTaskID() === taskID)))?.getAssignedTasks()
+    
         let task = assignedTasks?.find(t => t.getTaskID() === taskID)
-        
         task?.setCompletedTime(completedMinutes)
         assignedTasks = assignedTasks?.filter(t => t.getTaskID() !== taskID)
+        
         this.engineerList.find(e => e.getAssignedTasks().
         find(t => t.getTaskID() === taskID))?.setAssignedTasks(assignedTasks as Task[])
 
