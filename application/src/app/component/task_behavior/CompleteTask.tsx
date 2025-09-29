@@ -1,20 +1,16 @@
 "use client"
 import { Engineer, Manager } from "@/app/entity/model"
+import { isTaskAssigned, isValidCompletedMinutes, isValidTaskID } from "@/app/validation/validation_rules"
 import { FormEvent, useState } from "react"
 
 interface CompleteTaskProps {
   manager : Manager
 }
 
-const isTaskAssigned = (engineerList : Engineer[], taskID : String) : boolean => {
-    return (engineerList.find(e => e.getAssignedTasks().
-    find(t => t.getTaskID() === taskID)) ? true : false)
-}
-
 const isValidInput = (taskID : String, completedMinutes: number, engineerList: Engineer[]) : boolean => {
-    return ((taskID.length > 0) && 
-    (completedMinutes > 0) && 
-    isTaskAssigned(engineerList, taskID))
+    return isValidTaskID(taskID) && 
+    isValidCompletedMinutes(completedMinutes) && 
+    isTaskAssigned(engineerList, taskID)
 }
 
 const CompleteTask: React.FC<CompleteTaskProps> = ({ manager }) => {

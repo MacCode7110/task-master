@@ -1,5 +1,6 @@
 "use client"
 import { Manager } from "@/app/entity/model"
+import { isValidEngineerName } from "@/app/validation/validation_rules"
 import { FormEvent, useState } from "react"
 
 interface AddEngineerProps {
@@ -17,7 +18,7 @@ const AddEngineer: React.FC<AddEngineerProps> = ({ manager }) => {
 
     const handleSubmit = (e : FormEvent) => {
       e.preventDefault()
-      engineerName.length > 0 ? manager.addEngineer(engineerName) : setSubmissionIsDisabled(true)
+      isValidEngineerName(engineerName) ? manager.addEngineer(engineerName) : setSubmissionIsDisabled(true)
       setEngineerName("")
       console.log(manager.getEngineerList())
     }

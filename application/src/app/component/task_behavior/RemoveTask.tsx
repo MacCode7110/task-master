@@ -1,18 +1,15 @@
 "use client"
 import { Manager, Task } from "@/app/entity/model"
+import { isTaskUnassigned, isValidTaskID } from "@/app/validation/validation_rules"
 import { FormEvent, useState } from "react"
 
 interface RemoveTaskProps {
   manager: Manager
 }
 
-const isTaskNotAssigned = (unassignedTaskList: Task[], taskID : String) => {
-    return (unassignedTaskList.find(t => t.getTaskID() === taskID) ? true : false)
-}
-
 const isValidInput = (unassignedTaskList: Task[], taskID : String) => {
-    return (taskID.length > 0) && 
-    isTaskNotAssigned(unassignedTaskList, taskID)
+    return isValidTaskID(taskID) && 
+    isTaskUnassigned(unassignedTaskList, taskID)
 }
 
 const RemoveTask: React.FC<RemoveTaskProps> = ({ manager }) => {

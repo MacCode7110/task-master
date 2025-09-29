@@ -1,27 +1,15 @@
 "use client"
 import { Engineer, Manager, Task } from "@/app/entity/model"
+import { engineerExists, taskExists, isTaskAssigned, isValidEngineerID, isValidTaskID } from "@/app/validation/validation_rules"
 import { FormEvent, useState } from "react"
 
 interface AssignTaskProps {
   manager: Manager
 }
 
-const isTaskAssigned = (engineerList: Engineer[], taskID: String) : boolean => {
-    return (engineerList.find(e => e.getAssignedTasks().
-    find(t => t.getTaskID() === taskID)) ? true : false)
-}
-
-const taskExists = (unassignedTaskList: Task[], taskID: String) : boolean => {
-  return (unassignedTaskList.find(t => t.getTaskID() === taskID) ? true : false)
-}
-
-const engineerExists = (engineerList : Engineer[], engineerID : String) : boolean => {
-  return (engineerList.find(e => e.getEngineerID() === engineerID) ? true : false)
-}
-
 const isValidInput = (engineerList: Engineer[], engineerID: String, unassignedTaskList: Task[], taskID: String) : boolean => {
-  return (engineerID.length > 0) && 
-  (taskID.length > 0) && 
+  return isValidEngineerID(engineerID) && 
+  isValidTaskID(taskID) && 
   engineerExists(engineerList, engineerID) && 
   taskExists(unassignedTaskList, taskID) && 
   isTaskAssigned(engineerList, taskID)

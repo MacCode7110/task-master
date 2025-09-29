@@ -1,21 +1,14 @@
 "use client"
 import { Engineer, Manager } from "@/app/entity/model"
+import { engineerExists, isNoTaskAssignedToEngineer' } from "@/app/validation/validation_rules"
 import { FormEvent, useState } from "react"
 
 interface RemoveEngineerProps {
   manager : Manager
 }
 
-const isNoTaskAssigned = (engineerList: Engineer[], engineerID : String) : boolean => {
-    return (((engineerList.find(e => e.getEngineerID() === engineerID))?.getAssignedTasks().length === 0) ? true : false)
-}
-
-const engineerExists = (engineerList : Engineer[], engineerID : String) : boolean => {
-  return (engineerList.find(e => e.getEngineerID() === engineerID) ? true : false)
-}
-
 const isValidInput = (engineerList : Engineer[], engineerID : String) : boolean => {
-    return engineerExists(engineerList, engineerID) && isNoTaskAssigned(engineerList, engineerID)
+    return engineerExists(engineerList, engineerID) && isNoTaskAssignedToEngineer'(engineerList, engineerID)
 }
 
 const RemoveEngineer: React.FC<RemoveEngineerProps> = ({ manager }) => {

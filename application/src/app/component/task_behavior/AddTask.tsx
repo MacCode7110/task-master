@@ -1,5 +1,6 @@
 "use client"
 import { Manager } from "@/app/entity/model"
+import { isValidEstimatedMinutes, isValidTaskName } from "@/app/validation/validation_rules"
 import { FormEvent, useState } from "react"
 
 interface AddTaskProps {
@@ -24,7 +25,7 @@ const AddTask: React.FC<AddTaskProps> = ({ manager }) => {
 
     const handleSubmit = (e : FormEvent) => {
       e.preventDefault()
-      state.taskName.length > 0 && state.estimatedMinutes > 0 ? manager.addTask(state.taskName, state.estimatedMinutes) : setSubmissionIsDisabled(true)
+      isValidTaskName(state.taskName) && isValidEstimatedMinutes(state.estimatedMinutes) ? manager.addTask(state.taskName, state.estimatedMinutes) : setSubmissionIsDisabled(true)
       setState({taskName: "",
       estimatedMinutes: 0})
       console.log(manager.getUnassignedTaskList())    
