@@ -1,25 +1,34 @@
 "use client"
-import { Manager } from "@/app/entity/model"
+import { Engineer, Manager } from "@/app/entity/model"
 import { isValidEngineerName } from "@/app/validation/validation_rules"
-import { FormEvent, useState } from "react"
+import { Dispatch, FormEvent, SetStateAction, useState } from "react"
 
 interface AddEngineerProps {
-  manager : Manager
+  manager: Manager
+  setEngineerTableData: Dispatch<SetStateAction<Engineer[]>>
 }
 
-const AddEngineer: React.FC<AddEngineerProps> = ({ manager }) => {
+const AddEngineer: React.FC<AddEngineerProps> = ({ manager , setEngineerTableData}) => {
     const [engineerName, setEngineerName] = useState("")
     const [submissionIsDisabled, setSubmissionIsDisabled] = useState(false)
 
     const handleChange = (e : FormEvent) => {
       const target = e.target as HTMLInputElement
       setEngineerName(target.value)
+      setSubmissionIsDisabled(false)
     }
 
     const handleSubmit = (e : FormEvent) => {
       e.preventDefault()
-      isValidEngineerName(engineerName) ? manager.addEngineer(engineerName) : setSubmissionIsDisabled(true)
-      setEngineerName("")
+      
+      if(isValidEngineerName(engineerName)) {
+         manager.addEngineer(engineerName) 
+         setEngineerTableData([...manager.getEngineerList()])
+      } else {
+        setSubmissionIsDisabled(true)
+        setEngineerName("")
+      }
+       
       console.log(manager.getEngineerList())
     }
 

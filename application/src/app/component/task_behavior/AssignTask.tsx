@@ -1,10 +1,12 @@
 "use client"
 import { Engineer, Manager, Task } from "@/app/entity/model"
 import { engineerExists, taskExists, isTaskAssigned, isValidEngineerID, isValidTaskID } from "@/app/validation/validation_rules"
-import { FormEvent, useState } from "react"
+import { Dispatch, FormEvent, SetStateAction, useState } from "react"
 
 interface AssignTaskProps {
   manager: Manager
+  setEngineerTableData: Dispatch<SetStateAction<Engineer[]>>
+  setUnassignedTaskTableData: Dispatch<SetStateAction<Task[]>>
 }
 
 const isValidInput = (engineerList: Engineer[], engineerID: String, unassignedTaskList: Task[], taskID: String) : boolean => {
@@ -15,7 +17,7 @@ const isValidInput = (engineerList: Engineer[], engineerID: String, unassignedTa
   isTaskAssigned(engineerList, taskID)
 }
 
-const AssignTask: React.FC<AssignTaskProps> = ({ manager }) => {
+const AssignTask: React.FC<AssignTaskProps> = ({ manager, setEngineerTableData, setUnassignedTaskTableData }) => {
     const [state, setState] = useState({
       taskID: "",
       engineerID: ""
@@ -28,6 +30,7 @@ const AssignTask: React.FC<AssignTaskProps> = ({ manager }) => {
           ...state,
           [target.name] : target.value
         })
+        setSubmissionIsDisabled(false)
 
     }
 

@@ -1,5 +1,11 @@
 "use client"
-function CompletedTaskTable() {
+import { Task } from "@/app/entity/model"
+
+interface CompletedTaskTableProps {
+    completedTaskList: Task[]
+}
+
+const CompletedTaskTable: React.FC<CompletedTaskTableProps> = ({ completedTaskList }) => {
     return (
         <section className="section">
             <div className = "block mt-6">
@@ -15,13 +21,6 @@ function CompletedTaskTable() {
                                     <th>Completed Minutes</th>
                                 </tr>
                             </thead>
-                            <tfoot>
-                                <tr className="is-info">
-                                    <th>Task ID</th>
-                                    <th>Name</th>
-                                    <th>Completed Minutes</th>
-                                </tr>
-                            </tfoot>
                             <tbody>
                                 <tr>
                                     <td>

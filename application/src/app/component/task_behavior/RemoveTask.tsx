@@ -1,10 +1,11 @@
 "use client"
 import { Manager, Task } from "@/app/entity/model"
 import { isTaskUnassigned, isValidTaskID } from "@/app/validation/validation_rules"
-import { FormEvent, useState } from "react"
+import { Dispatch, FormEvent, SetStateAction, useState } from "react"
 
 interface RemoveTaskProps {
   manager: Manager
+  setUnassignedTaskTableData: Dispatch<SetStateAction<Task[]>>
 }
 
 const isValidInput = (unassignedTaskList: Task[], taskID : String) => {
@@ -12,13 +13,14 @@ const isValidInput = (unassignedTaskList: Task[], taskID : String) => {
     isTaskUnassigned(unassignedTaskList, taskID)
 }
 
-const RemoveTask: React.FC<RemoveTaskProps> = ({ manager }) => {
+const RemoveTask: React.FC<RemoveTaskProps> = ({ manager, setUnassignedTaskTableData }) => {
     const [taskID, setTaskID] = useState("")
     const [submissionIsDisabled, setSubmissionIsDisabled] = useState(false)
 
     const handleChange = (e : FormEvent) => {
       const target = e.target as HTMLInputElement
       setTaskID(target.value)
+      setSubmissionIsDisabled(false)
     }
 
     const handleSubmit = (e : FormEvent) => {

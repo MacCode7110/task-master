@@ -1,13 +1,14 @@
 "use client"
-import { Manager } from "@/app/entity/model"
+import { Manager, Task } from "@/app/entity/model"
 import { isValidEstimatedMinutes, isValidTaskName } from "@/app/validation/validation_rules"
-import { FormEvent, useState } from "react"
+import { Dispatch, FormEvent, SetStateAction, useState } from "react"
 
 interface AddTaskProps {
-  manager : Manager
+  manager: Manager
+  setUnassignedTaskTableData: Dispatch<SetStateAction<Task[]>>
 }
 
-const AddTask: React.FC<AddTaskProps> = ({ manager }) => {
+const AddTask: React.FC<AddTaskProps> = ({ manager, setUnassignedTaskTableData }) => {
     const [state, setState] = useState({
       taskName: "",
       estimatedMinutes: 0
@@ -21,6 +22,7 @@ const AddTask: React.FC<AddTaskProps> = ({ manager }) => {
         // Target.name creates a dynamic key which will change based on the name and have a corresponding value
         [target.name] : target.value
       })
+      setSubmissionIsDisabled(false)
     }
 
     const handleSubmit = (e : FormEvent) => {

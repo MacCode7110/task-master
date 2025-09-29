@@ -1,23 +1,25 @@
 "use client"
 import { Engineer, Manager } from "@/app/entity/model"
-import { engineerExists, isNoTaskAssignedToEngineer' } from "@/app/validation/validation_rules"
-import { FormEvent, useState } from "react"
+import { engineerExists, isNoTaskAssignedToEngineer } from "@/app/validation/validation_rules"
+import { Dispatch, FormEvent, SetStateAction, useState } from "react"
 
 interface RemoveEngineerProps {
-  manager : Manager
+  manager: Manager
+  setEngineerTableData: Dispatch<SetStateAction<Engineer[]>>
 }
 
 const isValidInput = (engineerList : Engineer[], engineerID : String) : boolean => {
-    return engineerExists(engineerList, engineerID) && isNoTaskAssignedToEngineer'(engineerList, engineerID)
+    return engineerExists(engineerList, engineerID) && isNoTaskAssignedToEngineer(engineerList, engineerID)
 }
 
-const RemoveEngineer: React.FC<RemoveEngineerProps> = ({ manager }) => {
+const RemoveEngineer: React.FC<RemoveEngineerProps> = ({ manager, setEngineerTableData }) => {
     const [engineerID, setEngineerID] = useState("")
     const [submissionIsDisabled, setSubmissionIsDisabled] = useState(false)
     
     const handleChange = (e : FormEvent) => {
       const target = e.target as HTMLInputElement
       setEngineerID(target.value)
+      setSubmissionIsDisabled(false)
     }
     
     const handleSubmit = (e : FormEvent) => {

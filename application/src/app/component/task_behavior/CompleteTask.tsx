@@ -1,10 +1,11 @@
 "use client"
 import { Engineer, Manager } from "@/app/entity/model"
 import { isTaskAssigned, isValidCompletedMinutes, isValidTaskID } from "@/app/validation/validation_rules"
-import { FormEvent, useState } from "react"
+import { Dispatch, FormEvent, SetStateAction, useState } from "react"
 
 interface CompleteTaskProps {
   manager : Manager
+  setEngineerTableData: Dispatch<SetStateAction<Engineer[]>>
 }
 
 const isValidInput = (taskID : String, completedMinutes: number, engineerList: Engineer[]) : boolean => {
@@ -13,7 +14,7 @@ const isValidInput = (taskID : String, completedMinutes: number, engineerList: E
     isTaskAssigned(engineerList, taskID)
 }
 
-const CompleteTask: React.FC<CompleteTaskProps> = ({ manager }) => {
+const CompleteTask: React.FC<CompleteTaskProps> = ({ manager, setEngineerTableData }) => {
     const [state, setState] = useState({
       taskID: "",
       completedMinutes: 0
@@ -26,6 +27,7 @@ const CompleteTask: React.FC<CompleteTaskProps> = ({ manager }) => {
           ...state,
           [target.name] : target.value
         })
+        setSubmissionIsDisabled(false)
     }
 
     const handleSubmit = (e : FormEvent) => {

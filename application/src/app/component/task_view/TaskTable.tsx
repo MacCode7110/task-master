@@ -1,5 +1,11 @@
 "use client"
-function TaskList({ taskList }) {
+import { Task } from "@/app/entity/model"
+
+interface UnassignedTaskTableProps {
+    unassignedTaskList : Task[]
+}
+
+const UnassignedTaskTable: React.FC<UnassignedTaskTableProps> = ({ unassignedTaskList }) => {
     return (
         <div className = "block mt-2">
             <h2 className = "subtitle is-6 has-text-weight-bold is-family-sans-serif has-text-warning-dark">Unassigned Task Table</h2>
@@ -12,13 +18,6 @@ function TaskList({ taskList }) {
                         <th>Estimated Minutes</th>
                     </tr>
                 </thead>
-                <tfoot>
-                    <tr className="is-info">
-                        <th>Task ID</th>
-                        <th>Name</th>
-                        <th>Estimated Minutes</th>
-                    </tr>
-                </tfoot>
                 <tbody>
                     <tr>
                         <td>
@@ -60,4 +59,4 @@ function TaskList({ taskList }) {
     )
 }
 
-export default TaskList
+export default UnassignedTaskTable
