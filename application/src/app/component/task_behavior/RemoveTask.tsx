@@ -42,7 +42,7 @@ const RemoveTask: React.FC<RemoveTaskProps> = ({ manager, setUnassignedTaskTable
     return (
        <div className = "block mt-2">
             <h2 className = "subtitle is-6 has-text-weight-bold is-family-sans-serif has-text-warning-dark">Remove Task</h2>
-            <h3 className = "subtitle is-7 is-family-sans-serif has-text-warning-dark">Specify a Task ID in the Task Table to remove a task from the Task Table</h3>
+            <h3 className = "subtitle is-7 is-family-sans-serif has-text-warning-dark">Specify a Task ID in the Unassigned Task Table to remove a task from the Task Table</h3>
               <form onSubmit={handleSubmit}>
                 <div className = "field">
                   <label className = "label is-family-code is-size-7">Task ID:</label>

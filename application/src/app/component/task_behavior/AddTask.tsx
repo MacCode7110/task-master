@@ -57,6 +57,7 @@ const AddTask: React.FC<AddTaskProps> = ({ manager, setUnassignedTaskTableData, 
       estimatedMinutes: 0})    
     }
 
+    // Executes when the user focuses on the HTML element through clicking, tabbing, and other methods
     const handleFocus = (e : FormEvent) => {
       const target = e.target as HTMLInputElement
       if (target.value == '0') {
