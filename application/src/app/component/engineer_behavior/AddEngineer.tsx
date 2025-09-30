@@ -1,6 +1,6 @@
 "use client"
-import { Engineer, Manager } from "@/app/entity/model"
-import { isValidEngineerName } from "@/app/validation/validation_rules"
+import { Engineer, Manager } from "../../entity/model"
+import { isValidEngineerName } from "../../validation/validation_rules"
 import { Dispatch, FormEvent, SetStateAction, useState } from "react"
 
 interface AddEngineerProps {
@@ -34,7 +34,7 @@ const AddEngineer: React.FC<AddEngineerProps> = ({ manager , setEngineerTableDat
     return (
         <div className = "block mt-2">
             <h2 className = "subtitle is-6 has-text-weight-bold is-family-sans-serif has-text-warning-dark">Add Engineer</h2>
-            <h3 className = "subtitle is-7 is-family-sans-serif has-text-warning-dark">Specify an Engineer Name to add an engineer to the Engineer Table</h3>
+            <h3 className = "subtitle is-7 is-family-sans-serif has-text-warning-dark" data-testid="addEngineerDescription">Specify an Engineer Name to add an engineer to the Engineer Table</h3>
               <form onSubmit={handleSubmit}>
                 <div className = "field">
                   <label className = "label is-family-code is-size-7">Engineer Name:</label>

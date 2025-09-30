@@ -1,6 +1,6 @@
 "use client"
-import { Manager, Task } from "@/app/entity/model"
-import { isTaskUnassigned, isValidTaskID } from "@/app/validation/validation_rules"
+import { Manager, Task } from "../../entity/model"
+import { isTaskUnassigned, isValidTaskID } from "../../validation/validation_rules"
 import { Dispatch, FormEvent, SetStateAction, useState } from "react"
 
 interface RemoveTaskProps {
@@ -42,7 +42,7 @@ const RemoveTask: React.FC<RemoveTaskProps> = ({ manager, setUnassignedTaskTable
     return (
        <div className = "block mt-2">
             <h2 className = "subtitle is-6 has-text-weight-bold is-family-sans-serif has-text-warning-dark">Remove Task</h2>
-            <h3 className = "subtitle is-7 is-family-sans-serif has-text-warning-dark">Specify a Task ID in the Unassigned Task Table to remove a task from the Unassigned Task Table</h3>
+            <h3 className = "subtitle is-7 is-family-sans-serif has-text-warning-dark" data-testid={"removeTaskDescription"}>Specify a Task ID in the Unassigned Task Table to remove a task from the Unassigned Task Table</h3>
               <form onSubmit={handleSubmit}>
                 <div className = "field">
                   <label className = "label is-family-code is-size-7">Task ID:</label>

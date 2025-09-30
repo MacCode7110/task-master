@@ -1,5 +1,5 @@
 "use client"
-import { Task } from "@/app/entity/model"
+import { Task } from "../../entity/model"
 import { Key } from "react"
 
 interface UnassignedTaskTableProps {

@@ -6,5 +6,10 @@ export default defineConfig({
     test: {
         globals: true, // Optional: if you want global APIs like 'expect'
         environment: 'jsdom', // Recommended for React component testing
+        coverage: {
+            enabled: true,
+            reporter: ["text"],
+            reportOnFailure: true
+        }
     },
 })

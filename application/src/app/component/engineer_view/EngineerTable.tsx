@@ -1,5 +1,5 @@
 "use client"
-import { Engineer } from "@/app/entity/model"
+import { Engineer } from "../../entity/model"
 import { Key } from "react"
 
 interface EngineerTableProps {

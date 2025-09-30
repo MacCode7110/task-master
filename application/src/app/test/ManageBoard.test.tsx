@@ -1,11 +1,28 @@
+import '@testing-library/jest-dom'
 import { expect, test } from 'vitest'
-import { Manager, Model } from '../entity/model'
+import { cleanup, render, screen } from '@testing-library/react'
+import ManageBoard from '../page'
 
-test('manageboard', () => {
-    // let model = new Model(new Manager([], [], [], 0, 0))
-    // expect(model.manager.getEngineerList()).toStrictEqual([])
-    // expect(model.manager.getUnassignedTaskList()).toStrictEqual([])
-    // expect(model.manager.getCompletedTaskList()).toStrictEqual([])
-    // expect(model.manager.getTotalEstimatedUnassignedTime()).toBe(0)
-    // expect(model.manager.getTotalCompletedTime()).toBe(0)
+describe("ManageBoard", () => {
+    beforeEach(() => {
+        render(<ManageBoard />)
+    })
+
+    test("renders", () => {
+        expect(screen.getByText("Task Master")).toBeVisible()
+    })
+
+    test("displays totalEstimatedUnassignedTime", async () => {
+        const element = await screen.findByTestId("totalEstimatedUnassigned")
+        expect(element).toBeVisible()
+    })
+
+    test("displays totalCompletedTime", async () => {
+        const element = await screen.findByTestId("totalCompleted")
+        expect(element).toBeVisible()
+    })
+
+    afterEach(() => {
+        cleanup()
+    })
 })

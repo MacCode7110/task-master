@@ -1,6 +1,6 @@
 "use client"
-import { Engineer, Manager, Task } from "@/app/entity/model"
-import { isTaskAssigned, isValidCompletedMinutes, isValidTaskID } from "@/app/validation/validation_rules"
+import { Engineer, Manager, Task } from "../../entity/model"
+import { isTaskAssigned, isValidCompletedMinutes, isValidTaskID } from "../../validation/validation_rules"
 import { Dispatch, FormEvent, SetStateAction, useState } from "react"
 
 interface CompleteTaskProps {
@@ -81,7 +81,7 @@ const CompleteTask: React.FC<CompleteTaskProps> = ({ manager, setEngineerTableDa
 
     return (<div className = "block mt-2">
             <h2 className = "subtitle is-6 has-text-weight-bold is-family-sans-serif has-text-warning-dark">Complete Task</h2>
-            <h3 className = "subtitle is-7 is-family-sans-serif has-text-warning-dark">Specify a Task ID in the Engineer Table and Completed Minutes to complete a task</h3>
+            <h3 className = "subtitle is-7 is-family-sans-serif has-text-warning-dark" data-testid={"completeTaskDescription"}>Specify a Task ID in the Engineer Table and Completed Minutes to complete a task</h3>
               <form onSubmit={handleSubmit}>
                 <div className = "field">
                   <label className = "label is-family-code is-size-7">Task ID:</label>

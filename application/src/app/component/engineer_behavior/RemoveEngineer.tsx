@@ -1,6 +1,6 @@
 "use client"
-import { Engineer, Manager } from "@/app/entity/model"
-import { engineerExists, isNoTaskAssignedToEngineer } from "@/app/validation/validation_rules"
+import { Engineer, Manager } from "../../entity/model"
+import { engineerExists, isNoTaskAssignedToEngineer } from "../../validation/validation_rules"
 import { Dispatch, FormEvent, SetStateAction, useState } from "react"
 
 interface RemoveEngineerProps {
@@ -38,7 +38,7 @@ const RemoveEngineer: React.FC<RemoveEngineerProps> = ({ manager, setEngineerTab
     return (
         <div className = "block mt-2">
             <h2 className = "subtitle is-6 has-text-weight-bold is-family-sans-serif has-text-warning-dark">Remove Engineer</h2>
-            <h3 className = "subtitle is-7 is-family-sans-serif has-text-warning-dark">Specify an Engineer ID in the Engineer Table to remove an engineer from the Engineer Table</h3>
+            <h3 className = "subtitle is-7 is-family-sans-serif has-text-warning-dark" data-testid="removeEngineerDescription">Specify an Engineer ID in the Engineer Table to remove an engineer from the Engineer Table</h3>
               <form onSubmit={handleSubmit}>
                 <div className = "field">
                   <label className = "label is-family-code is-size-7">Engineer ID:</label>
