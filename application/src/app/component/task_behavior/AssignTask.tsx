@@ -7,17 +7,18 @@ interface AssignTaskProps {
   manager: Manager
   setEngineerTableData: Dispatch<SetStateAction<Engineer[]>>
   setUnassignedTaskTableData: Dispatch<SetStateAction<Task[]>>
+  setTotalEstimatedUnassignedTime: Dispatch<SetStateAction<number>>
 }
 
 const isValidInput = (engineerList: Engineer[], engineerID: String, unassignedTaskList: Task[], taskID: String) : boolean => {
   return isValidEngineerID(engineerID) && 
   isValidTaskID(taskID) && 
   engineerExists(engineerList, engineerID) && 
-  taskExists(unassignedTaskList, taskID) && 
-  isTaskAssigned(engineerList, taskID)
+  taskExists(unassignedTaskList, taskID) 
+  && !(isTaskAssigned(engineerList, taskID))
 }
 
-const AssignTask: React.FC<AssignTaskProps> = ({ manager, setEngineerTableData, setUnassignedTaskTableData }) => {
+const AssignTask: React.FC<AssignTaskProps> = ({ manager, setEngineerTableData, setUnassignedTaskTableData, setTotalEstimatedUnassignedTime }) => {
     const [state, setState] = useState({
       taskID: "",
       engineerID: ""
@@ -36,7 +37,18 @@ const AssignTask: React.FC<AssignTaskProps> = ({ manager, setEngineerTableData, 
 
     const handleSubmit = (e : FormEvent) => {
         e.preventDefault()
-        isValidInput(manager.getEngineerList(), state.engineerID, manager.getUnassignedTaskList(), state.taskID) ? manager.assignTask(state.taskID, state.engineerID) : setSubmissionIsDisabled(true)
+
+        if(isValidInput(manager.getEngineerList(), state.engineerID, manager.getUnassignedTaskList(), state.taskID)) {
+          manager.assignTask(state.taskID, state.engineerID)
+          manager.computeTotalEstimatedTimeByEngineer(state.engineerID)
+          setEngineerTableData([...manager.getEngineerList()])
+          setUnassignedTaskTableData([...manager.getUnassignedTaskList()])
+          manager.computeTotalEstimatedUnassignedTime()
+          setTotalEstimatedUnassignedTime(manager.getTotalEstimatedUnassignedTime())
+        } else {
+          setSubmissionIsDisabled(true)
+        }
+
         setState({taskID: "", engineerID: ""})
         console.log(manager.getEngineerList())
         console.log(manager.getUnassignedTaskList())

@@ -6,6 +6,7 @@ import { Dispatch, FormEvent, SetStateAction, useState } from "react"
 interface RemoveTaskProps {
   manager: Manager
   setUnassignedTaskTableData: Dispatch<SetStateAction<Task[]>>
+  setTotalEstimatedUnassignedTime: Dispatch<SetStateAction<number>>
 }
 
 const isValidInput = (unassignedTaskList: Task[], taskID : String) => {
@@ -13,7 +14,7 @@ const isValidInput = (unassignedTaskList: Task[], taskID : String) => {
     isTaskUnassigned(unassignedTaskList, taskID)
 }
 
-const RemoveTask: React.FC<RemoveTaskProps> = ({ manager, setUnassignedTaskTableData }) => {
+const RemoveTask: React.FC<RemoveTaskProps> = ({ manager, setUnassignedTaskTableData, setTotalEstimatedUnassignedTime }) => {
     const [taskID, setTaskID] = useState("")
     const [submissionIsDisabled, setSubmissionIsDisabled] = useState(false)
 
@@ -25,7 +26,16 @@ const RemoveTask: React.FC<RemoveTaskProps> = ({ manager, setUnassignedTaskTable
 
     const handleSubmit = (e : FormEvent) => {
       e.preventDefault()
-      isValidInput(manager.getUnassignedTaskList(), taskID) ? manager.removeTask(taskID) : setSubmissionIsDisabled(true)
+      
+      if(isValidInput(manager.getUnassignedTaskList(), taskID)) {
+        manager.removeTask(taskID)
+        setUnassignedTaskTableData([...manager.getUnassignedTaskList()])
+        manager.computeTotalEstimatedUnassignedTime()
+        setTotalEstimatedUnassignedTime(manager.getTotalEstimatedUnassignedTime())
+      } else {
+        setSubmissionIsDisabled(true)
+      }
+
       setTaskID("")
       console.log(manager.getUnassignedTaskList())
     }
@@ -37,7 +47,7 @@ const RemoveTask: React.FC<RemoveTaskProps> = ({ manager, setUnassignedTaskTable
               <form onSubmit={handleSubmit}>
                 <div className = "field">
                   <label className = "label is-family-code is-size-7">Task ID:</label>
-                  <input className = "input is-info is-small" type="number" value={taskID} onChange={handleChange}/>
+                  <input className = "input is-info is-small" type="text" value={taskID} onChange={handleChange}/>
                 </div>
                 <button className = "button is-family-monospace is-link is-size-7" disabled={submissionIsDisabled}>Remove Task</button>
               </form>

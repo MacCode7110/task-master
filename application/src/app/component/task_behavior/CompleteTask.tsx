@@ -32,7 +32,13 @@ const CompleteTask: React.FC<CompleteTaskProps> = ({ manager, setEngineerTableDa
 
     const handleSubmit = (e : FormEvent) => {
         e.preventDefault()
-        isValidInput(state.taskID, state.completedMinutes, manager.getEngineerList()) ? manager.completeTask(state.taskID, state.completedMinutes) : setSubmissionIsDisabled(true)
+        if(isValidInput(state.taskID, state.completedMinutes, manager.getEngineerList())) {
+          manager.completeTask(state.taskID, state.completedMinutes)
+          setEngineerTableData([...manager.getEngineerList()])
+        } else {
+          setSubmissionIsDisabled(true)
+        }
+
         console.log(manager.getCompletedTaskList())
     }
 
@@ -42,7 +48,7 @@ const CompleteTask: React.FC<CompleteTaskProps> = ({ manager, setEngineerTableDa
               <form onSubmit={handleSubmit}>
                 <div className = "field">
                   <label className = "label is-family-code is-size-7">Task ID:</label>
-                  <input className = "input is-info is-small" type="number" value={state.taskID} name="taskID" onChange={handleChange}/>
+                  <input className = "input is-info is-small" type="text" value={state.taskID} name="taskID" onChange={handleChange}/>
                 </div>
                 <div className = "field">
                   <label className = "label is-family-code is-size-7">Completed Minutes:</label>

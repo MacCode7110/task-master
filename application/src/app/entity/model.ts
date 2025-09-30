@@ -94,11 +94,15 @@ export class Manager {
     private engineerList: Engineer[]
     private unassignedTaskList: Task[]
     private completedTaskList: Task[]
+    private totalEstimatedUnassignedTime: number
+    private totalCompletedTime: number
 
-    constructor(engineerList: Engineer[], unassignedTaskList: Task[], completedTaskList: Task[]) {
+    constructor(engineerList: Engineer[], unassignedTaskList: Task[], completedTaskList: Task[], totalEstimatedUnassignedTime: number, totalCompletedTime: number) {
         this.engineerList = engineerList
         this.unassignedTaskList = unassignedTaskList
         this.completedTaskList = completedTaskList
+        this.totalEstimatedUnassignedTime = totalEstimatedUnassignedTime
+        this.totalCompletedTime = totalCompletedTime
     }
 
     generateUniqueID() : String {
@@ -127,19 +131,19 @@ export class Manager {
     // Implementing Immutable Object Modification for assignTask and completeTask methods to create safe code
 
     assignTask(taskID: String, engineerID: String) : void {
-        let task = this.unassignedTaskList.find(t => t.getTaskID() === taskID)
+        let task: Task | undefined = this.unassignedTaskList.find(t => t.getTaskID() === taskID)
         // Remove task from task list
         this.unassignedTaskList = this.unassignedTaskList.filter(t => t.getTaskID() !== taskID)
         
-        let assignedTasks = this.engineerList.find(e => e.getEngineerID() === engineerID)?.getAssignedTasks()
+        let assignedTasks: Task[] | undefined = this.engineerList.find(e => e.getEngineerID() === engineerID)?.getAssignedTasks()
         assignedTasks?.push(task as Task)
         this.engineerList.find(e => e.getEngineerID() === engineerID)?.setAssignedTasks(assignedTasks as Task[])
     }
 
     completeTask(taskID: String, completedMinutes: number) : void {
-        let assignedTasks = (this.engineerList.find(e => e.getAssignedTasks().find(t => t.getTaskID() === taskID)))?.getAssignedTasks()
+        let assignedTasks: Task[] | undefined = (this.engineerList.find(e => e.getAssignedTasks().find(t => t.getTaskID() === taskID)))?.getAssignedTasks()
     
-        let task = assignedTasks?.find(t => t.getTaskID() === taskID)
+        let task: Task | undefined = assignedTasks?.find(t => t.getTaskID() === taskID)
         task?.setCompletedTime(completedMinutes)
         assignedTasks = assignedTasks?.filter(t => t.getTaskID() !== taskID)
         
@@ -149,35 +153,35 @@ export class Manager {
         this.completedTaskList.push(task as Task)
     }
 
-    computeTotalEstimatedUnassignedTaskTime() : number {
-        let totalEstimatedUnassignedTime = 0
+    computeTotalEstimatedUnassignedTime() : void {
+        let totalEstimatedUnassignedTime: number = 0
         
         for(let t of this.unassignedTaskList) {
             totalEstimatedUnassignedTime+=t.getEstimatedTime()
         }
 
-        return totalEstimatedUnassignedTime
+        this.totalEstimatedUnassignedTime = totalEstimatedUnassignedTime
     }
 
-    computeTotalEstimatedTaskTimeByEngineer(engineerID: String) : number {
-        let totalEstimatedTime = 0
-        let assignedTasks = this.engineerList.find(e => e.getEngineerID() === engineerID)?.getAssignedTasks()
+    computeTotalEstimatedTimeByEngineer(engineerID: String) : void {
+        let totalEstimatedTime: number = 0
+        let assignedTasks: Task[] | undefined = this.engineerList.find(e => e.getEngineerID() === engineerID)?.getAssignedTasks()
 
         for (let t of assignedTasks as Task[]) {
             totalEstimatedTime+=t.getEstimatedTime()
         }
 
-        return totalEstimatedTime
+        this.engineerList.find(e => e.getEngineerID() === engineerID)?.setTotalEstimatedTaskTime(totalEstimatedTime)
     }
 
-    computeTotalCompletedTaskTime() : number {
-        let totalCompletedTime = 0
+    computeTotalCompletedTime() : void {
+        let totalCompletedTime: number = 0
         
         for(let t of this.completedTaskList) {
             totalCompletedTime += t.getCompletedTime()
         }
 
-        return totalCompletedTime
+        this.totalCompletedTime = totalCompletedTime
     }
 
     getEngineerList() : Engineer[] {
@@ -192,6 +196,13 @@ export class Manager {
         return this.completedTaskList
     }
 
+    getTotalEstimatedUnassignedTime() : number {
+        return this.totalEstimatedUnassignedTime
+    }
+
+    getTotalCompletedTime() : number {
+        return this.totalCompletedTime
+    }
 }
 
 export class Model {

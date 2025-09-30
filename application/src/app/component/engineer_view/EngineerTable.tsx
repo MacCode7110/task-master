@@ -32,7 +32,7 @@ const EngineerTable: React.FC<EngineerTableProps> = ({ engineerList }) => {
                             <td>
                                 {e.getAssignedTasks().map(
                                     t => (
-                                        `${t.getTaskID()} - ${t.getName()} - ${t.getEstimatedTime()}, `
+                                        `(${t.getTaskID()} - ${t.getName()} - ${t.getEstimatedTime()}), `
                                     )
                                 )}
                             </td>

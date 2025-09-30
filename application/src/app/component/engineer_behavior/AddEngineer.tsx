@@ -8,7 +8,7 @@ interface AddEngineerProps {
   setEngineerTableData: Dispatch<SetStateAction<Engineer[]>>
 }
 
-const AddEngineer: React.FC<AddEngineerProps> = ({ manager , setEngineerTableData}) => {
+const AddEngineer: React.FC<AddEngineerProps> = ({ manager , setEngineerTableData }) => {
     const [engineerName, setEngineerName] = useState("")
     const [submissionIsDisabled, setSubmissionIsDisabled] = useState(false)
 
@@ -26,9 +26,9 @@ const AddEngineer: React.FC<AddEngineerProps> = ({ manager , setEngineerTableDat
          setEngineerTableData([...manager.getEngineerList()])
       } else {
         setSubmissionIsDisabled(true)
-        setEngineerName("")
       }
        
+      setEngineerName("")
       console.log(manager.getEngineerList())
     }
 

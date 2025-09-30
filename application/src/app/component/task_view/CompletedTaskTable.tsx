@@ -1,5 +1,6 @@
 "use client"
 import { Task } from "@/app/entity/model"
+import { Key } from "react"
 
 interface CompletedTaskTableProps {
     completedTaskList: Task[]
@@ -22,39 +23,18 @@ const CompletedTaskTable: React.FC<CompletedTaskTableProps> = ({ completedTaskLi
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                {completedTaskList.map(t => (<tr key = {t.getTaskID() as Key}>
                                     <td>
-                                        1
+                                        {t.getTaskID()}
                                     </td>
                                     <td>
-                                        Fix Missing User Account Data Bug
+                                        {t.getName()}
                                     </td>
                                     <td>
-                                        60
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        2
-                                    </td>
-                                    <td>
-                                        Refactor App Settings Interface
-                                    </td>
-                                    <td>
-                                        120
+                                        {t.getCompletedTime()}
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>
-                                        3
-                                    </td>
-                                    <td>
-                                        Refactor App Cloud Backup Interface
-                                    </td>
-                                    <td>
-                                        60
-                                    </td>
-                                </tr>
+                                ))}
                             </tbody>
                         </table>
                     </div>

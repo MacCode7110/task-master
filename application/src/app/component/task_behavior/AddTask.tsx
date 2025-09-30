@@ -6,9 +6,10 @@ import { Dispatch, FormEvent, SetStateAction, useState } from "react"
 interface AddTaskProps {
   manager: Manager
   setUnassignedTaskTableData: Dispatch<SetStateAction<Task[]>>
+  setTotalEstimatedUnassignedTime: Dispatch<SetStateAction<number>>
 }
 
-const AddTask: React.FC<AddTaskProps> = ({ manager, setUnassignedTaskTableData }) => {
+const AddTask: React.FC<AddTaskProps> = ({ manager, setUnassignedTaskTableData, setTotalEstimatedUnassignedTime }) => {
     const [state, setState] = useState({
       taskName: "",
       estimatedMinutes: 0
@@ -17,17 +18,28 @@ const AddTask: React.FC<AddTaskProps> = ({ manager, setUnassignedTaskTableData }
 
     const handleChange = (e : FormEvent) => {
       const target = e.target as HTMLInputElement
+      const targetValue = (target.name === "estimatedMinutes" ? parseInt(target.value) : target.value)
+
       setState({
         ...state,
         // Target.name creates a dynamic key which will change based on the name and have a corresponding value
-        [target.name] : target.value
+        [target.name] : targetValue
       })
       setSubmissionIsDisabled(false)
     }
 
     const handleSubmit = (e : FormEvent) => {
       e.preventDefault()
-      isValidTaskName(state.taskName) && isValidEstimatedMinutes(state.estimatedMinutes) ? manager.addTask(state.taskName, state.estimatedMinutes) : setSubmissionIsDisabled(true)
+
+      if(isValidTaskName(state.taskName) && isValidEstimatedMinutes(state.estimatedMinutes)) {
+        manager.addTask(state.taskName, state.estimatedMinutes)
+        setUnassignedTaskTableData([...manager.getUnassignedTaskList()])
+        manager.computeTotalEstimatedUnassignedTime()
+        setTotalEstimatedUnassignedTime(manager.getTotalEstimatedUnassignedTime())
+      } else {
+        setSubmissionIsDisabled(true)
+      }
+
       setState({taskName: "",
       estimatedMinutes: 0})
       console.log(manager.getUnassignedTaskList())    

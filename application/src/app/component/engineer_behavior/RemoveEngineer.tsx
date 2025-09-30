@@ -24,7 +24,14 @@ const RemoveEngineer: React.FC<RemoveEngineerProps> = ({ manager, setEngineerTab
     
     const handleSubmit = (e : FormEvent) => {
       e.preventDefault()
-      isValidInput(manager.getEngineerList(), engineerID) ? manager.removeEngineer(engineerID) : setSubmissionIsDisabled(true)
+      
+      if(isValidInput(manager.getEngineerList(), engineerID)) {
+        manager.removeEngineer(engineerID)
+        setEngineerTableData([...manager.getEngineerList()])
+      } else {
+        setSubmissionIsDisabled(true)
+      }
+
       setEngineerID("")
       console.log(manager.getEngineerList())
     }
