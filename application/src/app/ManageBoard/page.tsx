@@ -24,8 +24,9 @@ const Page: React.FC<ManageBoardProps> = ({ manager }) => {
 
     return (
         <div className="section">
-            <h1 className = "title is-5 has-text-weight-bold is-family-sans-serif has-text-warning-dark">Total Number of Estimated Minutes for all Unassigned Tasks: {totalEstimatedUnassignedTime}</h1>
-            <h2 className = "title is-5 has-text-weight-bold is-family-sans-serif has-text-warning-dark">Total Number of Minutes for all Completed Tasks: {totalCompletedTime}</h2>
+            <h1 className="title is-4 has-text-weight-bold is-family-sans-serif has-text-warning-dark">Task Master</h1>
+            <h2 className = "title is-5 has-text-weight-bold is-family-sans-serif has-text-warning-dark">Total Number of Estimated Minutes for all Unassigned Tasks: {totalEstimatedUnassignedTime}</h2>
+            <h3 className = "title is-5 has-text-weight-bold is-family-sans-serif has-text-warning-dark">Total Number of Minutes for all Completed Tasks: {totalCompletedTime}</h3>
             <div className="columns is-multiline">
                 <div className="column is-one-third">
                     <AddTask manager={manager} 
