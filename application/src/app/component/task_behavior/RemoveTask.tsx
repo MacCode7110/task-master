@@ -37,7 +37,6 @@ const RemoveTask: React.FC<RemoveTaskProps> = ({ manager, setUnassignedTaskTable
       }
 
       setTaskID("")
-      console.log(manager.getUnassignedTaskList())
     }
 
     return (

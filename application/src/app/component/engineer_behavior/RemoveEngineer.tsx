@@ -33,7 +33,6 @@ const RemoveEngineer: React.FC<RemoveEngineerProps> = ({ manager, setEngineerTab
       }
 
       setEngineerID("")
-      console.log(manager.getEngineerList())
     }
   
     return (

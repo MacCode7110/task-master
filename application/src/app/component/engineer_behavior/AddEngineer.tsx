@@ -29,7 +29,6 @@ const AddEngineer: React.FC<AddEngineerProps> = ({ manager , setEngineerTableDat
       }
        
       setEngineerName("")
-      console.log(manager.getEngineerList())
     }
 
     return (

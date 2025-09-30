@@ -48,13 +48,13 @@ export class Engineer {
     private engineerID: String
     private name: String
     private assignedTasks: Task[]
-    private totalEstimatedTaskTime: number
+    private totalEstimatedTime: number
 
     constructor(engineerID: String, name: String, assignedTasks: Task[], totalEstimatedTaskTime: number) {
         this.engineerID = engineerID
         this.name = name
         this.assignedTasks = assignedTasks
-        this.totalEstimatedTaskTime = totalEstimatedTaskTime
+        this.totalEstimatedTime = totalEstimatedTaskTime
     }
 
     public getEngineerID(): String {
@@ -81,12 +81,12 @@ export class Engineer {
         this.assignedTasks = assignedTasks
     }
 
-    public getTotalEstimatedTaskTime(): number {
-        return this.totalEstimatedTaskTime
+    public getTotalEstimatedTime(): number {
+        return this.totalEstimatedTime
     }
 
     public setTotalEstimatedTaskTime(totalEstimatedTaskTime: number) {
-        this.totalEstimatedTaskTime = totalEstimatedTaskTime
+        this.totalEstimatedTime = totalEstimatedTaskTime
     }
 }
 
@@ -117,6 +117,11 @@ export class Manager {
 
     removeEngineer(engineerID: String) : void {
         this.engineerList = this.engineerList.filter(e => e.getEngineerID() !== engineerID)
+    }
+
+    getEngineerByAssignedTaskID(taskID: String) : Engineer | undefined {
+        return this.engineerList.find(e => e.getAssignedTasks().
+        find(t => t.getTaskID() === taskID))
     }
 
     addTask(name: String, estimatedTime: number) : void {
@@ -167,11 +172,16 @@ export class Manager {
         let totalEstimatedTime: number = 0
         let assignedTasks: Task[] | undefined = this.engineerList.find(e => e.getEngineerID() === engineerID)?.getAssignedTasks()
 
-        for (let t of assignedTasks as Task[]) {
-            totalEstimatedTime+=t.getEstimatedTime()
+        if(assignedTasks && assignedTasks?.length > 0) {
+            for (let t of assignedTasks as Task[]) {
+                totalEstimatedTime+=t.getEstimatedTime()
+            }
         }
 
-        this.engineerList.find(e => e.getEngineerID() === engineerID)?.setTotalEstimatedTaskTime(totalEstimatedTime)
+        let newEngineerList: Engineer[] = this.engineerList.map(e => 
+            e.getEngineerID() === engineerID ?
+            Object.assign(e, {totalEstimatedTime: totalEstimatedTime}) : e)
+        this.engineerList = newEngineerList
     }
 
     computeTotalCompletedTime() : void {

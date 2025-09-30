@@ -21,7 +21,7 @@ const EngineerTable: React.FC<EngineerTableProps> = ({ engineerList }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {engineerList.map((e) => (
+                    {engineerList?.map((e) => (
                         <tr key={e.getEngineerID() as Key}>
                             <td>
                                 {e.getEngineerID()}
@@ -37,7 +37,7 @@ const EngineerTable: React.FC<EngineerTableProps> = ({ engineerList }) => {
                                 )}
                             </td>
                             <td>
-                                {e.getTotalEstimatedTaskTime()}
+                                {e.getTotalEstimatedTime()}
                             </td>
                         </tr>
                     ))}

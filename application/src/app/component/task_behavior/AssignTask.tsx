@@ -37,7 +37,6 @@ const AssignTask: React.FC<AssignTaskProps> = ({ manager, setEngineerTableData, 
 
     const handleSubmit = (e : FormEvent) => {
         e.preventDefault()
-
         if(isValidInput(manager.getEngineerList(), state.engineerID, manager.getUnassignedTaskList(), state.taskID)) {
           manager.assignTask(state.taskID, state.engineerID)
           manager.computeTotalEstimatedTimeByEngineer(state.engineerID)
@@ -50,8 +49,6 @@ const AssignTask: React.FC<AssignTaskProps> = ({ manager, setEngineerTableData, 
         }
 
         setState({taskID: "", engineerID: ""})
-        console.log(manager.getEngineerList())
-        console.log(manager.getUnassignedTaskList())
     }
 
     return (<div className = "block mt-2">
